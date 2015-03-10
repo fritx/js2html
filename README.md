@@ -20,20 +20,20 @@ To turn
   'data-b': 'b',
   'data-c': { c: 1 }
 }, [
-  ['source', {
+  ['source/', {
     type: 'audio/mp3',
     src: 'media/audio-01.mp3'
   }]
 ]]
 ```
 
-Into
+Into (with pretty)
 
 ```html
 <audio id="id" preload
 data-a="" data-b="b" data-c="{\\"c\\":1}"
 class="c1 c2 c3 c4">
-  <source type="audio/mp3" src="media/audio-01.mp3">
+  <source type="audio/mp3" src="media/audio-01.mp3"/>
 </audio>
 ```
 
