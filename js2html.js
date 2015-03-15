@@ -20,7 +20,8 @@ function renderUnit(unit) {
     var attrs = {}
     var children = []
     each(unit.slice(1), function(v) {
-      if (isArray(v)) children = v
+      if (isString(v)) children = [v] // single text node
+      else if (isArray(v)) children = v
       else if (isObject(v)) attrs = v
     })
     var t
@@ -36,30 +37,31 @@ function renderUnit(unit) {
     // id
     if (id) markup += ' id="' + id + '"'
     // attrs & classes
+    if ('class' in attrs) {
+      var v = attrs['class']
+      if (isString(v)) {
+        classes = classes.concat(v.split(/\s+/))
+      }
+      else if (isArray(v)) {
+        classes = classes.concat(v)
+      }
+      else if (isObject(v)) {
+        each(v, function(b, c) {
+          if (b) classes.push(c)
+        })
+      }
+    }
     each(attrs, function(v, k) {
+      if (k === 'class') return
       if (!v && v !== '') return
       else if (v === true) markup += ' ' + k
       else if (isString(v)) {
-        if (k === 'class') {
-          return classes = classes.concat(v.split(/\s+/))
-        }
         // stringify
         markup += ' ' + k + '=' + JSON.stringify(attrs[k])
       }
-      else if (isObject(v)) { 
-        if (k === 'class') {
-          if (isArray(v)) {
-            classes = classes.concat(v)
-          }
-          else {
-            each(v, function(b, c) {
-              if (b) classes.push(c)
-            })
-          }
-          return
-        }
-        // stringify * 2
-        markup += ' ' + k + '=' + JSON.stringify(JSON.stringify(attrs[k]))
+      else if (isObject(v)) {
+        // stringify, the same
+        markup += ' ' + k + '=' + JSON.stringify(attrs[k])
       }
     })
     // classes

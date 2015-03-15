@@ -18,7 +18,10 @@ To turn
   },
   'data-a': '',
   'data-b': 'b',
-  'data-c': { c: 1 }
+  'data-c': {
+    c: 1,
+    c1: 'sad"\'s'
+  }
 }, [
   ['source/', {
     type: 'audio/mp3',
@@ -30,9 +33,8 @@ To turn
 Into (with pretty)
 
 ```html
-<audio id="id" preload
-data-a="" data-b="b" data-c="{\\"c\\":1}"
-class="c1 c2 c3 c4">
+<audio id="id" preload data-a="" data-b="b"
+data-c={"c":1,"c1":"sad\"'s"} class="c1 c2 c3 c4">
   <source type="audio/mp3" src="media/audio-01.mp3"/>
 </audio>
 ```
